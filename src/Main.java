@@ -1,24 +1,22 @@
-import org.mariuszgromada.math.mxparser.Expression;
-import org.mariuszgromada.math.mxparser.License;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        boolean isCallSuccessful = License.iConfirmNonCommercialUse("John Doe");
-        int[] digits = { 9, 8, 7, 6, 5, 4, 3, 2 };
+        Scanner scanner = new Scanner(System.in);
+        var ints = new int[8];
+
+        for(int i = 0; i < 8; i++)
+            ints[i] = scanner.nextInt();
         char[] operators = { '+', '-', '*', '/', '_' };
 
         List<String> combinations = new ArrayList<>();
-        generateCombinations(digits, operators, combinations, "", 0);
+        generateCombinations(ints, operators, combinations, "", 0);
 
         for (String combination : combinations) {
-
-            if(v == 100){
+            if(Math.abs(ExpressionParser.parseExpression(combination) - 100) < 0.0000001)
                 System.out.println(combination);
-
-            }
         }
     }
 
