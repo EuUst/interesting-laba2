@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="jdk19">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/MathParser.org-mXparser-v.5.2.1-jdk-bin-only.zip!/MathParser.org-mXparser-v.5.2.1-jdk-bin-only/bin/jdk19" />
+      <root url="jar://$USER_HOME$/Desktop/MathParser.org-mXparser.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="jar://$USER_HOME$/Downloads/MathParser.org-mXparser-v.5.2.1-jdk-bin-only.zip!/MathParser.org-mXparser-v.5.2.1-jdk-bin-only/bin/jdk19" recursive="false" />
+  </library>
+</component>
