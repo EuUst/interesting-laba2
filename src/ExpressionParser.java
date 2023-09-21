@@ -3,7 +3,7 @@ import java.util.*;
 public class ExpressionParser {
     public static double parseExpression(String expression) {
         List<String> tokens = tokenize(expression);
-        Queue<String> postfix = convertToPostfix(tokens);
+        Queue<String> postfix = toPostfix(tokens);
         return evaluatePostfix(postfix);
     }
 
@@ -12,13 +12,8 @@ public class ExpressionParser {
         StringBuilder currentToken = new StringBuilder();
 
         for (char ch : expression.toCharArray()) {
-            if (Character.isDigit(ch) || ch == '.') {
+            if (Character.isDigit(ch)) {
                 currentToken.append(ch);
-            } else if (Character.isWhitespace(ch)) {
-                if (currentToken.length() > 0) {
-                    tokens.add(currentToken.toString());
-                    currentToken.setLength(0);
-                }
             } else {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
@@ -28,14 +23,13 @@ public class ExpressionParser {
             }
         }
 
-        if (currentToken.length() > 0) {
+        if (currentToken.length() > 0)
             tokens.add(currentToken.toString());
-        }
 
         return tokens;
     }
 
-    public static Queue<String> convertToPostfix(List<String> tokens) {
+    public static Queue<String> toPostfix(List<String> tokens) {
         Queue<String> postfix = new LinkedList<>();
         Stack<String> operatorStack = new Stack<>();
         Map<String, Integer> precedence = new HashMap<>();
@@ -47,15 +41,8 @@ public class ExpressionParser {
         for (String token : tokens) {
             if (token.matches("\\d+(\\.\\d+)?")) {
                 postfix.offer(token);
-            } else if (token.equals("(")) {
-                operatorStack.push(token);
-            } else if (token.equals(")")) {
-                while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
-                    postfix.offer(operatorStack.pop());
-                }
-                operatorStack.pop();
             } else {
-                while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")
+                while (!operatorStack.isEmpty()
                         && precedence.get(token) <= precedence.get(operatorStack.peek())) {
                     postfix.offer(operatorStack.pop());
                 }
@@ -76,7 +63,9 @@ public class ExpressionParser {
         while (!postfix.isEmpty()) {
             String token = postfix.poll();
 
-            if (token.matches("\\d+(\\.\\d+)?")) {
+            //регулярное выражение о соответствии любой цифре от 0 до 9 и о том, что группа символов таких может
+            //присутствовать один и более раз
+            if (token.matches("\\d+")) {
                 operandStack.push(Double.parseDouble(token));
             } else {
                 double operand2 = operandStack.pop();
