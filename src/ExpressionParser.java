@@ -32,18 +32,18 @@ public class ExpressionParser {
     public static Queue<String> toPostfix(List<String> tokens) {
         Queue<String> postfix = new LinkedList<>();
         Stack<String> operatorStack = new Stack<>();
-        Map<String, Integer> precedence = new HashMap<>();
-        precedence.put("+", 1);
-        precedence.put("-", 1);
-        precedence.put("*", 2);
-        precedence.put("/", 2);
+        Map<String, Integer> priority = new HashMap<>();
+
+        priority.put("+", 1);
+        priority.put("-", 1);
+        priority.put("*", 2);
+        priority.put("/", 2);
 
         for (String token : tokens) {
             if (token.matches("\\d+(\\.\\d+)?")) {
                 postfix.offer(token);
             } else {
-                while (!operatorStack.isEmpty()
-                        && precedence.get(token) <= precedence.get(operatorStack.peek())) {
+                while (!operatorStack.isEmpty() && priority.get(token) <= priority.get(operatorStack.peek())) {
                     postfix.offer(operatorStack.pop());
                 }
                 operatorStack.push(token);
